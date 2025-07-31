@@ -4,13 +4,14 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
   const [posts, setPosts] = useState([
-    { id: 1, client: "Smoothie Co.", title: "Post Smoothie Reel", caption: "Fresh smoothie vibes! 🥤", status: "Awaiting Approval", timestamp: "2025-07-30 10:00 AM" },
-    { id: 2, client: "Promo Brand", title: "Summer Promo Image", caption: "Summer savings are here! ☀️", status: "Approved & Scheduled", timestamp: "2025-07-30 11:30 AM" }
+    { id: 1, client: "Smoothie Co.", title: "Post Smoothie Reel", caption: "Fresh smoothie vibes! 🥤", status: "Awaiting Approval", timestamp: "2025-07-30 10:00 AM", media: null },
+    { id: 2, client: "Promo Brand", title: "Summer Promo Image", caption: "Summer savings are here! ☀️", status: "Approved & Scheduled", timestamp: "2025-07-30 11:30 AM", media: null }
   ]);
 
   const [newClient, setNewClient] = useState("");
   const [newPost, setNewPost] = useState("");
   const [newCaption, setNewCaption] = useState("");
+  const [newMedia, setNewMedia] = useState(null);
 
   const handleLogin = () => {
     if (password === "demo") setLoggedIn(true);
@@ -18,6 +19,17 @@ export default function App() {
 
   const approvePost = (id) => {
     setPosts(prev => prev.map(post => post.id === id ? { ...post, status: "Approved & Scheduled" } : post));
+  };
+
+  const editCaption = (id, newCaption) => {
+    setPosts(prev => prev.map(post => post.id === id ? { ...post, caption: newCaption } : post));
+  };
+
+  const handleMediaUpload = (e, id) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const previewUrl = URL.createObjectURL(file);
+    setPosts(prev => prev.map(post => post.id === id ? { ...post, media: previewUrl } : post));
   };
 
   const addPost = () => {
@@ -28,12 +40,14 @@ export default function App() {
       title: newPost,
       caption: newCaption || "(auto caption pending)",
       status: "Awaiting Approval",
-      timestamp: new Date().toLocaleString()
+      timestamp: new Date().toLocaleString(),
+      media: newMedia ? URL.createObjectURL(newMedia) : null
     };
     setPosts([...posts, newEntry]);
     setNewClient("");
     setNewPost("");
     setNewCaption("");
+    setNewMedia(null);
   };
 
   return (
@@ -83,6 +97,12 @@ export default function App() {
               value={newCaption}
               onChange={(e) => setNewCaption(e.target.value)}
             />
+            <input
+              type="file"
+              accept="image/*,video/*"
+              onChange={(e) => setNewMedia(e.target.files[0])}
+              style={{ marginBottom: "8px" }}
+            />
             <button
               onClick={addPost}
               style={{ backgroundColor: "#10b981", color: "white", padding: "10px", borderRadius: "8px", fontWeight: "600", cursor: "pointer" }}
@@ -97,6 +117,7 @@ export default function App() {
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Client</th>
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Post</th>
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Caption</th>
+                <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Media</th>
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Status</th>
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Timestamp</th>
                 <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Action</th>
@@ -107,7 +128,25 @@ export default function App() {
                 <tr key={post.id}>
                   <td style={{ padding: "8px", border: "1px solid #d1d5db", color: "#2563eb", cursor: "pointer", textDecoration: "underline" }}>{post.client}</td>
                   <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{post.title}</td>
-                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{post.caption}</td>
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>
+                    <input
+                      type="text"
+                      value={post.caption}
+                      onChange={(e) => editCaption(post.id, e.target.value)}
+                      style={{ width: "100%", padding: "4px" }}
+                    />
+                  </td>
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>
+                    {post.media ? (
+                      post.media.endsWith(".mp4") || post.media.endsWith(".mov") ? (
+                        <video src={post.media} width="60" controls />
+                      ) : (
+                        <img src={post.media} alt="Upload" width="60" />
+                      )
+                    ) : (
+                      <input type="file" accept="image/*,video/*" onChange={(e) => handleMediaUpload(e, post.id)} />
+                    )}
+                  </td>
                   <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{post.status}</td>
                   <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{post.timestamp}</td>
                   <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>
