@@ -27,75 +27,75 @@ export default function ClientDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Client Dashboard Hub</h1>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", padding: "24px" }}>
+      <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center" }}>Client Dashboard Hub</h1>
 
       {!loggedIn ? (
-        <div className="max-w-sm mx-auto bg-white shadow p-6 rounded-2xl">
-          <h2 className="text-xl font-semibold mb-4">Login</h2>
+        <div style={{ maxWidth: "400px", margin: "0 auto", background: "white", padding: "24px", borderRadius: "16px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
+          <h2 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "16px" }}>Login</h2>
           <input
             type="password"
             placeholder="Enter password"
-            className="w-full p-2 border rounded mb-4"
+            style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "8px", marginBottom: "16px" }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
             onClick={handleLogin}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+            style={{ backgroundColor: "#3b82f6", color: "white", padding: "10px", borderRadius: "8px", width: "100%", fontWeight: "600", cursor: "pointer" }}
           >
             Log In
           </button>
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto bg-white shadow p-6 rounded-2xl">
-          <h2 className="text-2xl font-semibold mb-4">Post Pipeline</h2>
+        <div style={{ maxWidth: "900px", margin: "0 auto", background: "white", padding: "24px", borderRadius: "16px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
+          <h2 style={{ fontSize: "24px", fontWeight: "600", marginBottom: "16px" }}>Post Pipeline</h2>
 
           {/* Add new task section */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Add New Post</h3>
+          <div style={{ marginBottom: "24px" }}>
+            <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "8px" }}>Add New Post</h3>
             <input
               type="text"
               placeholder="Post Title"
-              className="w-full p-2 border rounded mb-2"
+              style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "8px", marginBottom: "8px" }}
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}
             />
             <textarea
               placeholder="Draft Caption (optional)"
-              className="w-full p-2 border rounded mb-2"
+              style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "8px", marginBottom: "8px" }}
               value={newCaption}
               onChange={(e) => setNewCaption(e.target.value)}
             />
             <button
               onClick={addTask}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              style={{ backgroundColor: "#10b981", color: "white", padding: "10px", borderRadius: "8px", fontWeight: "600", cursor: "pointer" }}
             >
               Add Post
             </button>
           </div>
 
           {/* Task table */}
-          <table className="w-full border-collapse border border-gray-300">
+          <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #d1d5db" }}>
             <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2 border border-gray-300 text-left">Post</th>
-                <th className="p-2 border border-gray-300 text-left">Caption</th>
-                <th className="p-2 border border-gray-300 text-left">Status</th>
-                <th className="p-2 border border-gray-300 text-left">Action</th>
+              <tr style={{ background: "#e5e7eb" }}>
+                <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Post</th>
+                <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Caption</th>
+                <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Status</th>
+                <th style={{ padding: "8px", border: "1px solid #d1d5db", textAlign: "left" }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {tasks.map((task) => (
                 <tr key={task.id}>
-                  <td className="p-2 border border-gray-300">{task.title}</td>
-                  <td className="p-2 border border-gray-300">{task.caption}</td>
-                  <td className="p-2 border border-gray-300">{task.status}</td>
-                  <td className="p-2 border border-gray-300">
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{task.title}</td>
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{task.caption}</td>
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>{task.status}</td>
+                  <td style={{ padding: "8px", border: "1px solid #d1d5db" }}>
                     {task.status === "Awaiting Approval" && (
                       <button
                         onClick={() => approveTask(task.id)}
-                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                        style={{ backgroundColor: "#3b82f6", color: "white", padding: "6px 12px", borderRadius: "6px", cursor: "pointer" }}
                       >
                         Approve
                       </button>
@@ -105,7 +105,7 @@ export default function ClientDashboard() {
               ))}
             </tbody>
           </table>
-          <p className="text-gray-500 mt-4 text-sm">
+          <p style={{ color: "#6b7280", marginTop: "16px", fontSize: "14px" }}>
             *Demo: Approve button will eventually trigger scheduling & automation.
           </p>
         </div>
