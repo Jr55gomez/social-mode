@@ -27,7 +27,7 @@ export default function ClientDashboard() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", padding: "24px" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", padding: "24px", fontFamily: "Arial, sans-serif" }}>
       <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center" }}>Client Dashboard Hub</h1>
 
       {!loggedIn ? (
@@ -51,7 +51,6 @@ export default function ClientDashboard() {
         <div style={{ maxWidth: "900px", margin: "0 auto", background: "white", padding: "24px", borderRadius: "16px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
           <h2 style={{ fontSize: "24px", fontWeight: "600", marginBottom: "16px" }}>Post Pipeline</h2>
 
-          {/* Add new task section */}
           <div style={{ marginBottom: "24px" }}>
             <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "8px" }}>Add New Post</h3>
             <input
@@ -75,7 +74,6 @@ export default function ClientDashboard() {
             </button>
           </div>
 
-          {/* Task table */}
           <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #d1d5db" }}>
             <thead>
               <tr style={{ background: "#e5e7eb" }}>
