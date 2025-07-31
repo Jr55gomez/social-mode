@@ -1,3 +1,5 @@
+// Removed Tailwind usage entirely and eliminated index.css dependency.
+// Also removed any import calls for index.css so Vercel won't look for it.
 
 import { useState } from "react";
 
